@@ -38,4 +38,22 @@ describe("Vidly", () => {
     userEvent.type(screen.getByLabelText("Password"), "1234");
     expect(screen.getByRole("button", { name: /login/i })).toBeEnabled();
   });
+
+  it("username validation error is shown when username is empty", () => {
+    render(<App />);
+    fireEvent.click(screen.getByRole("link", { name: /login/i }));
+    userEvent.type(screen.getByLabelText("Username"), "    ");
+    expect(
+      screen.getByText('"Username" is not allowed to be empty')
+    ).toBeInTheDocument();
+  });
+
+  it("password validation error is shown when password is empty", () => {
+    render(<App />);
+    fireEvent.click(screen.getByRole("link", { name: /login/i }));
+    userEvent.type(screen.getByLabelText("Password"), "    ");
+    expect(
+      screen.getByText('"Password" is not allowed to be empty')
+    ).toBeInTheDocument();
+  });
 });
